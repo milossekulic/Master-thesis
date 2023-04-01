@@ -55,3 +55,10 @@ def delete_license_plate(id:int ,db:Session=Depends(get_db), current_user: int =
     post_query.delete(synchronize_session=False)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+@router.get('/controlIn/{license_plate_number}',status_code=status.HTTP_200_OK)
+def license_plate_controller_in(license_plate_number:str,db:Session=Depends(get_db)):
+    ps=db.query(models.LicensePlate).filter(models.LicensePlate.license_plate == license_plate_number).first()
+    if ps is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND ,detail=f"License plate with id {license_plate_number} not found")
+    return  True

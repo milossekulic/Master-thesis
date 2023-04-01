@@ -18,6 +18,7 @@ class LicensePlate(Base):
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
     created_by = Column(Integer, ForeignKey("users.id"), nullable=False)
+    active_now = Column(Boolean, nullable=False)
     # created_by = Column(Integer, ForeignKey(
     #     "users.id", ondelete="CASCADE"), nullable=False)
 
