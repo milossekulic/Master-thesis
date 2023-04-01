@@ -8,6 +8,7 @@ from pydantic.types import conint
 class PostBase(BaseModel):
     license_plate: str
     owner: str
+    active_now:Optional[bool] = False
 class LicensePlateCreate(PostBase):
     pass
     
