@@ -32,7 +32,7 @@ import time
 
 URL = 'https://inf-126e2cc0-5e9f-491c-9bd7-11000fb01b29-no4xvrhsfq-uc.a.run.app/detect' # copy and paste your URL here
 FALLBACK_URL = '' # copy and paste your fallback URL here
-IMAGE_PATH = '/home/milos/Desktop/Projekti/MilosSekulic-1276-20-MasterRad/license-plate-detection/filename.jpg'
+IMAGE_PATH = '/home/milos/Downloads/registartske_tablice/vocap7.jpeg'
 
 def detect(image_path, url=URL, conf_thres=0.25, iou_thres=0.45, ocr_model='large', ocr_classes='licence-plate', ocr_language='eng', retries=10, delay=0):
     response = requests.post(url, data={'conf_thres':conf_thres, 'iou_thres':iou_thres, **({'ocr_model':ocr_model, 'ocr_classes':ocr_classes, 'ocr_language':ocr_language} if ocr_model is not None else {})}, files={'image':open(image_path, 'rb')})
@@ -54,6 +54,12 @@ detections = detect(IMAGE_PATH)
 
 if len(detections) > 0:
     print(json.dumps(detections, indent=2))
+    license_plate_number = detections[0]["text"]
+    print(license_plate_number)
+    data = {"license_plate": license_plate_number} #"BG#739-LB"
+    ask_backend = requests.post(url=f'http://0.0.0.0:8008/license-plate/controlIn', data=json.dumps(data))
+    print(ask_backend.json())
+    print("nasli smo ga! pustaj!!!")
 else:
     print('no objects found.')
 

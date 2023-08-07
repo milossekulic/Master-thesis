@@ -4,6 +4,7 @@ from fastapi import APIRouter,Depends,HTTPException, Response,status
 from sqlalchemy.orm.session import Session
 from .. database import get_db
 from .. import models,schemas ,oauth2
+from datetime import datetime
 
 
 
@@ -56,9 +57,19 @@ def delete_license_plate(id:int ,db:Session=Depends(get_db), current_user: int =
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-@router.get('/controlIn/{license_plate_number}',status_code=status.HTTP_200_OK)
-def license_plate_controller_in(license_plate_number:str,db:Session=Depends(get_db)):
-    ps=db.query(models.LicensePlate).filter(models.LicensePlate.license_plate == license_plate_number).first()
+@router.post('/controlIn',status_code=status.HTTP_200_OK)
+def license_plate_controller_in(license_plate_number:schemas.LicensePlateNumber,db:Session=Depends(get_db)):
+    print(license_plate_number)
+    print(license_plate_number.license_plate)
+    ps=db.query(models.LicensePlate).filter(models.LicensePlate.license_plate == license_plate_number.license_plate).first()
     if ps is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND ,detail=f"License plate with id {license_plate_number} not found")
+    ps.active_now = True
+    ps.updated_at = datetime.utcnow()
+    # ps.updated_at = 
+    db.add(ps)
+    db.commit()
+    db.refresh(ps)
+    print(ps)
+    print("PROMENJENO")
     return  True
