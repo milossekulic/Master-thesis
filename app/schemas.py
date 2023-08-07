@@ -13,8 +13,8 @@ class LicensePlateCreate(PostBase):
     pass
     
 
-
-
+class LicensePlateNumber(BaseModel):
+    license_plate: str
 
 class Post(PostBase):
     id: int
