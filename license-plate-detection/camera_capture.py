@@ -1,5 +1,11 @@
 import cv2
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+AI_URL = os.getenv('AI_URL')
+BACKEND_URL_CONTROL_IN=os.getenv('BACKEND_URL_CONTROL_IN')
 # 1.creating a video object
 video = cv2.VideoCapture(0) 
 # 2. Variable
@@ -30,7 +36,7 @@ import requests
 import json
 import time
 
-URL = 'https://inf-126e2cc0-5e9f-491c-9bd7-11000fb01b29-no4xvrhsfq-uc.a.run.app/detect' # copy and paste your URL here
+URL = AI_URL # copy and paste your URL here
 FALLBACK_URL = '' # copy and paste your fallback URL here
 IMAGE_PATH = '/home/milos/Downloads/registartske_tablice/vocap7.jpeg'
 
@@ -57,7 +63,7 @@ if len(detections) > 0:
     license_plate_number = detections[0]["text"]
     print(license_plate_number)
     data = {"license_plate": license_plate_number} #"BG#739-LB"
-    ask_backend = requests.post(url=f'http://0.0.0.0:8008/license-plate/controlIn', data=json.dumps(data))
+    ask_backend = requests.post(url=BACKEND_URL_CONTROL_IN, data=json.dumps(data))
     print(ask_backend.json())
     print("nasli smo ga! pustaj!!!")
 else:
