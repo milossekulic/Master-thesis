@@ -75,8 +75,8 @@ services:
       - POSTGRES_PASSWORD=fastapi_traefik
       - POSTGRES_DB=fastapi_traefik
   
-  pgadmin:
-    container_name: pgadmin
+  pgadmin1:
+    container_name: pgadmin1
     image: dpage/pgadmin4
     environment:
       - PGADMIN_DEFAULT_EMAIL=milossekulic18@gmail.com
