@@ -35,7 +35,8 @@ import time
 
 URL = AI_URL  # copy and paste your URL here
 FALLBACK_URL = ""  # copy and paste your fallback URL here
-# IMAGE_PATH = '/home/milos/Desktop/Projekti/MilosSekulic-1276-20-MasterRad/license-plate-detection/processed.jpg'
+# IMAGE_PATH = "/home/milos/Desktop/Projekti/MilosSekulic-1276-20-MasterRad/license-plate-detection/processed.jpg"
+# IMAGE_PATH = "/home/milos/Desktop/Projekti/MilosSekulic-1276-20-MasterRad/license-plate-detection/vorotovic.jpg"
 IMAGE_PATH = "/home/milos/Desktop/Projekti/MilosSekulic-1276-20-MasterRad/license-plate-detection/processed.jpg"
 
 
@@ -127,13 +128,13 @@ def main():
         ask_backend = requests.post(url=BACKEND_URL_CONTROL_IN, data=json.dumps(data))
         print(ask_backend.json())
         if ask_backend.status_code == 200 and ask_backend.json() == True:
-            print("nasli smo ga! pustaj!!!")
+            print("Registarska tablica je detektovana.")
             return 1
         else:
-            print("nije nadjen registarski broj u bazi")
+            print("Registarska tablica nije pronadjena u bazi podataka.")
             return 0
     else:
-        print("no objects found.")
+        print("Nije pronadjen objekat na slici.")
         return 0
 
 
