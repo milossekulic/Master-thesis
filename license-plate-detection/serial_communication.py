@@ -3,7 +3,7 @@ import time
 import subprocess
 from camera_capture import main
 
-arduino = serial.Serial(port="/dev/ttyACM1", baudrate=38400, timeout=0.1)
+arduino = serial.Serial(port="/dev/ttyACM0", baudrate=38400, timeout=0.1)
 
 
 try:
